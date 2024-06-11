@@ -1,0 +1,73 @@
+version: "3.8"
+
+services:
+  videos_app:
+    container_name: videos_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "
+      export MODE=LOCAL && 
+      alembic upgrade head && 
+      uvicorn src.main:app --host 0.0.0.0 --port 8080 --reload"
+    env_file:
+      - .env
+    volumes:
+      - .:/src
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    networks:
+      - youtube-network
+
+  redis:
+    image: redis/redis-stack:latest
+    container_name: videos_redis
+    ports:
+      - "8001:8001" 
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - youtube-network
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: videos_rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - youtube-network
+
+  celery:
+    container_name: videos_celery
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "
+      export MODE=LOCAL &&
+      celery -A src.celery worker -l info"
+    env_file:
+      - .env
+    networks:
+      - youtube-network
+    volumes:
+      - .:/src
+
+
+networks:
+  youtube-network:
+    external: true
+
+
+volumes:
+  redis-data:
+  rabbitmq-data:
+

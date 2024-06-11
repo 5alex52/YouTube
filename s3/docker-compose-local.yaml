@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  s3:
+    container_name: s3_serivice
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "
+      uvicorn src.main:app --host 0.0.0.0 --port 9999 --reload"
+    env_file:
+      - .env
+    volumes:
+      - .:/src
+    expose:
+      - 9999
+    ports:
+      - "9999:9999"
+    networks:
+      - youtube-network
+
+networks:
+  youtube-network:
+    driver: bridge
+    name: "youtube-network"
+
