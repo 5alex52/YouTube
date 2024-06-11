@@ -23,7 +23,7 @@ async def upload(request: Request, file_name: str = None, domain: str = "main", 
         key = f"{uuid.uuid4()}_{file_name}"
 
         content_type = file.content_type
-        s3.put_object(Bucket=bucket, Key=key, Body=file_content, StorageClass='STANDARD', ContentType=content_type)
+        s3.put_object(Bucket=bucket, Key=key, Body=file_content, ContentType=content_type)
         link = f"{request.base_url}get/{domain}/{key}"
 
         return JSONResponse(content={"link": link})

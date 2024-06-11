@@ -15,8 +15,7 @@ from .videos.service import VideoService
 
 celery_app = Celery(
     "tasks",
-    broker=f"pyamqp://{settings.RABBIT_USER}:{settings.RABBIT_PASSWORD}\
-    @{settings.RABBIT_HOST}:{settings.RABBIT_PORT}//",
+    broker=f"pyamqp://{settings.RABBIT_USER}:{settings.RABBIT_PASSWORD}@{settings.RABBIT_HOST}:{settings.RABBIT_PORT}//",
     backend="rpc://",
 )
 

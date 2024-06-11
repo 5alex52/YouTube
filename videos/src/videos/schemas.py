@@ -36,6 +36,7 @@ class Ip(IpBase):
 
 class VideoBase(BaseModel):
     title: str = Field()
+    url: str = Field()
 
 
 class VideoCreate(VideoBase):
@@ -48,6 +49,7 @@ class VideoUpdate(VideoBase):
 
 class Video(VideoBase):
     id: uuid.UUID
+    url: str
     title: str
     views: int
     unique_views: int
@@ -56,10 +58,3 @@ class Video(VideoBase):
     class Config:
         from_attributes = True
 
-
-class VideoDB(VideoBase):
-    id: uuid.UUID
-    title: str
-    views: int
-    unique_views: List[uuid.UUID]
-    tags: List[Tag]

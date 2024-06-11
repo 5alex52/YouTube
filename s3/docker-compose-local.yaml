@@ -21,6 +21,6 @@ services:
 
 networks:
   youtube-network:
-    driver: bridge
-    name: "youtube-network"
+    external: true
+
 

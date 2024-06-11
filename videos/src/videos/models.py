@@ -53,6 +53,7 @@ class VideoModel(Base):
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, index=True, default=uuid.uuid4)
     title: Mapped[str] = mapped_column(index=True, nullable=False)
     views: Mapped[int] = mapped_column(default=0, nullable=False)
+    url: Mapped[str] = mapped_column(nullable=False)
 
     tags = relationship("TagModel", secondary=video_tag_association_table, back_populates="video_tag")
     unique_views = relationship(

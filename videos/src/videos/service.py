@@ -64,6 +64,7 @@ class VideoService(BaseService):
         return Video(
             id=video.id,
             title=video.title,
+            url=video.url,
             views=video.views,
             tags=[tag.name for tag in video.tags],
             unique_views=video.total_views(),

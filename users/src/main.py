@@ -5,7 +5,7 @@ from .config import settings
 from .users import auth_router
 from .users import user_router
 
-app = FastAPI()
+app = FastAPI(title="YouTube Users")
 
 
 app.add_middleware(

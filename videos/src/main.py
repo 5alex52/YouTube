@@ -6,7 +6,7 @@ from .recomendations.router import recomendations_router
 from .videos.router import tag_router
 from .videos.router import video_router
 
-app = FastAPI()
+app = FastAPI(title="YouTube Videos")
 
 
 app.add_middleware(
