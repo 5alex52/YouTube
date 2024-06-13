@@ -57,7 +57,8 @@ class UserTagsService(BaseService):
     async def get_recomendations(cls, user_id: uuid.UUID | None):
         if user_id:
             key = f"rec_user_{user_id}"
-            cached_value = json.loads(redis_client.get(key))
+            cached_value = redis_client.get(key)
             if cached_value:
-                return [await VideoService.get(video) for video in cached_value]
+                return [await VideoService.get(video) for video in json.loads(cached_value)]
+            await cls.process_tags(user_id, new_tags=[])
         return await VideoService.get_list(offset=0, limit=10)

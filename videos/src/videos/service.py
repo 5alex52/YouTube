@@ -87,7 +87,7 @@ class VideoService(BaseService):
         return videos
     
     @classmethod
-    def get_relevant_videos(tag_views: Dict[str, int], videos: List[VideoModel], top_n=10):
+    def get_relevant_videos(cls, tag_views: Dict[str, int], videos: List[VideoModel], top_n=10):
         total_views = sum(tag_views.values())
         tag_weights = {tag: count / total_views for tag, count in tag_views.items()}
 
@@ -96,7 +96,6 @@ class VideoService(BaseService):
         for video in videos:
             score = sum(tag_weights.get(tag.name, 0) for tag in video.tags)
             video_scores.append((str(video.id), score))
-            print(f"{str(video.id)} {score}")
 
         sorted_videos = sorted(video_scores, key=lambda x: x[1], reverse=True)
 
