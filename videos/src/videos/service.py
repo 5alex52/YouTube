@@ -85,7 +85,7 @@ class VideoService(BaseService):
             videos = cls.dao.get_videos_with_tags(session, tags_names)
         session.commit()
         return videos
-    
+
     @classmethod
     def get_relevant_videos(cls, tag_views: Dict[str, int], videos: List[VideoModel], top_n=10):
         total_views = sum(tag_views.values())

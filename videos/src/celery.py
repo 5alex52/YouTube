@@ -27,9 +27,6 @@ celery_app.conf.update(
 )
 
 
-
-
-
 @shared_task(name="get_recomenadations")
 def generate_recomendations(user_id: uuid.UUID, tag_views: Dict[str, int]):
     videos_with_tags = VideoService.get_videos_with_tags(tag_views.keys())

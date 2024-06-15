@@ -35,3 +35,6 @@ build-backend = "poetry.core.masonry.api"
 [tool.black]
 line-length = 120
 exclude = "migrations"
+
+[tool.pytest.ini_options]
+python_files = ["tests.py", "test_*.py", "*_test.py", "tests/*/*_tests.py"]

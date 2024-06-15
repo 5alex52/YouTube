@@ -1,23 +1,21 @@
-from faker import Faker
-from fastapi.testclient import TestClient
-from main import app
 import pytest
+from typing import List, Dict
+from src.videos.models import VideoModel, TagModel 
 
-
-fake = Faker()
 
 @pytest.fixture
-def client():
-    return TestClient(app)
-
-@pytest.fixture
-def video_data():
+def tag_views():
     return {
-        "id": fake.uuid4(),
-        "url": fake.url(),
-        "title": fake.sentence(),
-        "tags": [fake.word(), fake.word(), fake.word()],
-        "views": fake.random_int(),
-        "unique_views": fake.random_int(),
+        'tag1': 100,
+        'tag2': 200,
+        'tag3': 300
     }
-    
+
+@pytest.fixture
+def videos():
+    return [
+        VideoModel(id=1, tags=[TagModel(name='tag1'), TagModel(name='tag2')]),
+        VideoModel(id=2, tags=[TagModel(name='tag2'), TagModel(name='tag3')]),
+        VideoModel(id=3, tags=[TagModel(name='tag1'), TagModel(name='tag3')]),
+        VideoModel(id=4, tags=[TagModel(name='tag3')])
+    ]

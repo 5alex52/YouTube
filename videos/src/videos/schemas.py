@@ -57,4 +57,3 @@ class Video(VideoBase):
 
     class Config:
         from_attributes = True
-
